@@ -24,4 +24,4 @@ def WorklistRun():
 
 if WorklistRun():
     sys.exit(1)
-os.system('./getResentData.py')
+os.system('python getResentData.py')

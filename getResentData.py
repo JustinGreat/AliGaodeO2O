@@ -24,7 +24,7 @@ def testGetUrlData(url,param = ""):
             else:
                 connect = urllib2.urlopen(url)
             content = connect.read()
-            content.close()
+            connect.close()
             code = RIGHT
         except:
             print url
@@ -34,25 +34,34 @@ def testGetUrlData(url,param = ""):
         count+=1
         if code == RIGHT:
             break
- 
-        return code,content
+    print "Datas:%s"%content
+    return code,content
 
 def Start():
     f_p=open('./data/pass_worklist_failed','a')
     f_un=open('./data/unprocess_worklist_failed','a')
-    
-    urladdr="http://10.16.24.69/ces/api/aligd/vi/getresult?prepare_id=897414&key=A5E13AC7-8055-47D9-912D-39099BADB731&prepare_id=2712249"
+    datas=""
+    urladdr="http://10.16.24.69/ces/api/aligd/v1/getresult?prepare_id=897414&key=A5E13AC7-8055-47D9-912D-39099BADB731&prepare_id=2712249,2724955,2726780,2726270,2725840,2725040,2732319"
     code,datas=testGetUrlData(urladdr)
+    datas=datas[17:-2]
     if code == ERROR:
         print "alio2o_resend:get url data ERROR"
         return
-    datas.split('\n')
-    for data in datas:
-        data = data[:-1]
+    for c in range(len(datas)):
+        if (datas[c]== ',') and (datas[c-1]=='}'):
+            datas=datas[:c]+'\n'+datas[c+1:] 
+    datas_list=datas.split('\n')
+    print "Processed Datas:\n"
+    print datas_list
+    for data in datas_list:
+        print "Data 2 be delt:\n"
+        print data
+        #data = data[:-1]
         try:
-            data_json=json.load(data)
+            data_json=json.loads(data)
         except:
             print "ERROR when resolving json data\n"
+        print data_json.get("process_status")
         status=int(data_json.get("process_status"))
         if status == 1:
             f_un.write(data+'\n')
