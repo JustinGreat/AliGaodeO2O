@@ -34,7 +34,6 @@ def testGetUrlData(url,param = ""):
         count+=1
         if code == RIGHT:
             break
-    print "Datas:%s"%content
     return code,content
 
 def Start():
@@ -51,10 +50,8 @@ def Start():
         if (datas[c]== ',') and (datas[c-1]=='}'):
             datas=datas[:c]+'\n'+datas[c+1:] 
     datas_list=datas.split('\n')
-    print "Processed Datas:\n"
-    print datas_list
     for data in datas_list:
-        print "Data 2 be delt:\n"
+        print "Data 2 be dealt:"
         print data
         #data = data[:-1]
         try:
