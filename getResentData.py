@@ -40,7 +40,7 @@ def Start():
     f_p=open('./data/pass_worklist_failed','a')
     f_un=open('./data/unprocess_worklist_failed','a')
     datas=""
-    urladdr="http://10.16.24.69/ces/api/aligd/v1/getresult?prepare_id=897414&key=A5E13AC7-8055-47D9-912D-39099BADB731&prepare_id=2712249,2724955,2726780,2726270,2725840,2725040,2732319"
+    urladdr="http://10.16.24.69/ces/api/aligd/v1/getresult?prepare_id=897414&key=A5E13AC7-8055-47D9-912D-39099BADB731&prepare_id=2605240,2928665,2843267,2845017,2849311,2849890,2849968,2850048,2850481,2851184,2870085,2870594,2871084"
     code,datas=testGetUrlData(urladdr)
     datas=datas[17:-2]
     if code == ERROR:
@@ -60,9 +60,9 @@ def Start():
             print "ERROR when resolving json data\n"
         print data_json.get("process_status")
         status=int(data_json.get("process_status"))
-        if status == 1:
+        if status == 0:
             f_un.write(data+'\n')
-        elif status == 0:
+        elif status == 1:
             f_p.write(data+'\n')
     f_un.close()
     f_p.close()
